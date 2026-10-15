@@ -236,3 +236,60 @@ body {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+
+/* Compact mobile descriptions with a dedicated disclosure control. */
+.mobile-read-more-toggle {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  body > section:not(:first-of-type) {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+
+  .mobile-read-more:not(.is-expanded) .mobile-read-more-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+
+  .mobile-read-more-toggle:not([hidden]) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    min-height: 44px;
+    margin-top: 0.35rem;
+    padding: 0.25rem 0;
+    color: #7dd3fc;
+    font: 700 0.75rem/1.5 var(--font-body);
+    letter-spacing: 0.035em;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+  }
+
+  .mobile-read-more-toggle svg {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    transition: transform 180ms ease;
+  }
+
+  .mobile-read-more-toggle:hover { color: #e0f2fe; }
+  .mobile-read-more-toggle:focus-visible {
+    outline: 2px solid #38bdf8;
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+  .mobile-read-more.is-expanded .read-more-plus { opacity: 0; }
+  .mobile-read-more-toggle:active svg { transform: scale(0.92); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-read-more-toggle svg { transition: none; }
+}

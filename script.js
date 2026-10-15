@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initModals();
   initLeafletMap();
   initSmoothScroll();
+  initMobileReadMore();
 });
 
 /* ----------------------------------------------------
@@ -482,4 +483,57 @@ function showToast(message, type = 'success') {
     toast.classList.add('opacity-0', 'translate-y-2');
     setTimeout(() => toast.remove(), 300);
   }, 4000);
+}
+
+
+/* Mobile reading: full text stays available when JavaScript is unavailable. */
+function initMobileReadMore() {
+  const targets = document.querySelectorAll(
+    '#services .bento-card p.leading-relaxed, ' +
+    '.case-tab-panel > .space-y-4 > .space-y-3, ' +
+    '#concierge blockquote, #about .space-y-4.leading-relaxed'
+  );
+  const mobile = window.matchMedia('(max-width: 767px)');
+  const refreshers = [];
+
+  targets.forEach((text, index) => {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'mobile-read-more';
+    text.before(wrapper);
+    wrapper.appendChild(text);
+    text.classList.add('mobile-read-more-text');
+    text.id ||= `mobile-description-${index + 1}`;
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'mobile-read-more-toggle';
+    button.setAttribute('aria-controls', text.id);
+    button.setAttribute('aria-expanded', 'false');
+    button.innerHTML = '<span class="mobile-read-more-label">Подробнее</span>' +
+      '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+      '<circle cx="12" cy="12" r="10"/>' +
+      '<path d="M8 12h8"/><path class="read-more-plus" d="M12 8v8"/></svg>';
+    wrapper.appendChild(button);
+
+    const refresh = () => {
+      const expanded = button.getAttribute('aria-expanded') === 'true';
+      const visible = text.getClientRects().length > 0;
+      button.hidden = !mobile.matches || !visible ||
+        (!expanded && text.scrollHeight <= text.clientHeight + 1);
+    };
+    button.addEventListener('click', () => {
+      const expanded = button.getAttribute('aria-expanded') !== 'true';
+      wrapper.classList.toggle('is-expanded', expanded);
+      button.setAttribute('aria-expanded', String(expanded));
+      button.querySelector('.mobile-read-more-label').textContent = expanded ? 'Свернуть' : 'Подробнее';
+    });
+    refreshers.push(refresh);
+    if (typeof ResizeObserver !== 'undefined') {
+      new ResizeObserver(refresh).observe(text);
+    }
+    refresh();
+  });
+  const refreshAll = () => refreshers.forEach(refresh => refresh());
+  mobile.addEventListener('change', refreshAll);
+  document.fonts?.ready.then(refreshAll);
 }
