@@ -1,0 +1,238 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Montserrat:wght@500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+:root {
+  --bg-deep: #080A0D;
+  --bg-card: #10141B;
+  --bg-card-hover: #151A24;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-focus: rgba(59, 130, 246, 0.4);
+  --accent-blue: #2B5B84;
+  --accent-electric: #38BDF8;
+  --accent-red: #E11D48;
+  --accent-lime: #A3E635;
+  --font-heading: 'Space Grotesk', 'Montserrat', sans-serif;
+  --font-body: 'Manrope', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-body);
+  background-color: var(--bg-deep);
+  color: #F3F4F6;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: var(--bg-deep);
+  font-family: var(--font-body);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #080A0D;
+}
+::-webkit-scrollbar-thumb {
+  background: #1F2937;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3B82F6;
+}
+
+/* Typography Helpers */
+.font-heading {
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+/* Glassmorphism */
+.glass-panel {
+  background: rgba(16, 20, 27, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+}
+
+.glass-nav {
+  background: rgba(8, 10, 13, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.glass-modal {
+  background: rgba(14, 18, 25, 0.95);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Glow Effects */
+.glow-blue {
+  box-shadow: 0 0 35px -5px rgba(59, 130, 246, 0.35);
+}
+
+.glow-blue-lg {
+  box-shadow: 0 0 60px -10px rgba(59, 130, 246, 0.45);
+}
+
+.glow-red {
+  box-shadow: 0 0 35px -5px rgba(225, 29, 72, 0.35);
+}
+
+.glow-lime {
+  box-shadow: 0 0 35px -5px rgba(163, 230, 53, 0.35);
+}
+
+.text-glow-blue {
+  text-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
+}
+
+/* Carbon & Mesh Gradients */
+.bg-carbon-mesh {
+  background-image: radial-gradient(circle at 50% -20%, rgba(43, 91, 132, 0.25), transparent 70%),
+                    radial-gradient(circle at 100% 40%, rgba(225, 29, 72, 0.08), transparent 50%),
+                    radial-gradient(circle at 0% 80%, rgba(56, 189, 248, 0.08), transparent 50%);
+}
+
+.bg-dot-pattern {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Bento Card Hover */
+.bento-card {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: linear-gradient(180deg, rgba(20, 25, 34, 0.8) 0%, rgba(14, 18, 25, 0.95) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.bento-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(59, 130, 246, 0.35);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 30px -5px rgba(59, 130, 246, 0.2);
+}
+
+.bento-card .img-zoom {
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bento-card:hover .img-zoom {
+  transform: scale(1.05);
+}
+
+/* Button Shimmer */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent,
+    rgba(255, 255, 255, 0.15),
+    transparent
+  );
+  transform: rotate(30deg);
+  animation: shimmer 4s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%) rotate(30deg); }
+  30%, 100% { transform: translateX(100%) rotate(30deg); }
+}
+
+/* Radar Pulse */
+.radar-pulse {
+  position: relative;
+}
+.radar-pulse::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 9999px;
+  background: rgba(163, 230, 53, 0.4);
+  animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+/* Leaflet Dark Customization */
+.leaflet-container {
+  background: #080A0D !important;
+  font-family: var(--font-body);
+}
+
+.custom-map-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-map-pin {
+  width: 44px;
+  height: 44px;
+  background: #0F172A;
+  border: 2px solid #38BDF8;
+  border-radius: 50%;
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: bounce 2s infinite ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Custom Tooltip / Popup */
+.leaflet-popup-content-wrapper {
+  background: rgba(16, 20, 27, 0.95) !important;
+  color: #fff !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(59, 130, 246, 0.3) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.8) !important;
+}
+
+.leaflet-popup-tip {
+  background: rgba(16, 20, 27, 0.95) !important;
+}
+
+/* Animations */
+.animate-fade-in {
+  animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
