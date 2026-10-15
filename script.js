@@ -21,7 +21,7 @@ function initStickyHeader() {
   if (!header) return;
 
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 40) {
+    if (window.matchMedia('(min-width: 768px)').matches && window.scrollY > 40) {
       header.classList.add('py-2.5', 'shadow-2xl');
       header.classList.remove('py-3.5');
     } else {
@@ -373,6 +373,15 @@ function initLeafletMap() {
     zoomControl: true
   });
 
+  // Keep Leaflet attribution with a Russian tricolor instead of its default flag.
+  map.attributionControl.setPrefix(
+    '<a href="https://leafletjs.com" title="A JavaScript library for interactive maps">' +
+    '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8" role="img" aria-label="Россия" style="display:inline-block;vertical-align:middle">' +
+    '<path fill="#fff" d="M0 0h12v8H0z"/>' +
+    '<path fill="#0039a6" d="M0 2.6667h12v5.3333H0z"/>' +
+    '<path fill="#d52b1e" d="M0 5.3333h12V8H0z"/></svg> Leaflet</a>'
+  );
+
   // Dark Matter tiles by CartoDB
   L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -429,7 +438,8 @@ function initSmoothScroll() {
       const target = document.querySelector(targetId);
       if (target) {
         e.preventDefault();
-        const headerHeight = document.getElementById('main-header')?.offsetHeight || 80;
+        const header = document.getElementById('main-header');
+        const headerHeight = header && getComputedStyle(header).position === 'sticky' ? header.offsetHeight : 0;
         const targetPos = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
         window.scrollTo({
           top: targetPos,
